@@ -36,16 +36,38 @@ html,body{
   height:100%;
   font-family:'Poppins',sans-serif;
   background:var(--bg);
+  overflow:hidden;
   transition:0.3s;
 }
 
+/* ===== BACKGROUND DOODLE ===== */
+.bg span{
+  position:absolute;
+  font-size:34px;
+  opacity:0.25;
+  animation:float 8s infinite ease-in-out;
+}
+
+.bg span:nth-child(1){top:10%; left:8%;}
+.bg span:nth-child(2){top:20%; right:10%; animation-delay:1s;}
+.bg span:nth-child(3){bottom:15%; left:12%; animation-delay:2s;}
+.bg span:nth-child(4){bottom:20%; right:15%; animation-delay:3s;}
+.bg span:nth-child(5){top:50%; left:5%; animation-delay:4s;}
+.bg span:nth-child(6){top:60%; right:6%; animation-delay:5s;}
+
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-18px);}
+  100%{transform:translateY(0);}
+}
+
+/* ===== APP ===== */
 body{
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-/* ===== APP ===== */
 .app{
   width:92%;
   max-width:420px;
@@ -54,6 +76,8 @@ body{
   border-radius:30px;
   text-align:center;
   box-shadow:0 25px 50px rgba(0,0,0,0.4);
+  position:relative;
+  z-index:2;
   transition:0.3s;
 }
 
@@ -114,11 +138,21 @@ button:active{
 
 <body>
 
+<!-- BACKGROUND HIASAN -->
+<div class="bg">
+  <span>📘</span>
+  <span>✏️</span>
+  <span>📐</span>
+  <span>🎨</span>
+  <span>📊</span>
+  <span>⭐</span>
+</div>
+
 <div class="app">
   <button class="toggle" onclick="toggleMode()">🌙 / ☀️</button>
 
   <h1>📊 Hitung Nilai</h1>
-  <div class="sub">Belajar nyaman dengan mode favoritmu</div>
+  <div class="sub">Belajar jadi lebih nyaman & estetik ✨</div>
 
   <div id="inputs">
     <input type="number" placeholder="Nilai 1">
@@ -133,7 +167,7 @@ button:active{
   <div class="motivasi" id="motivasi"></div>
 </div>
 
-<!-- ===== SOUND EFFECT ===== -->
+<!-- SOUND -->
 <audio id="klik" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
 <audio id="bagus" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 <audio id="jelek" src="https://assets.mixkit.co/sfx/preview/mixkit-losing-drums-2023.mp3"></audio>
@@ -143,7 +177,7 @@ button:active{
 <script>
 const body = document.body;
 
-/* SIMPAN MODE */
+/* MODE */
 if(localStorage.getItem("mode")==="light"){
   body.classList.add("light");
 }
@@ -156,27 +190,26 @@ function toggleMode(){
   );
 }
 
-/* PLAY SOUND */
+/* SOUND */
 function play(id){
-  const s = document.getElementById(id);
-  s.currentTime = 0;
+  const s=document.getElementById(id);
+  s.currentTime=0;
   s.play();
 }
 
 /* TAMBAH INPUT */
 function tambahInput(){
   play("klik");
-  let i = document.createElement("input");
+  let i=document.createElement("input");
   i.type="number";
-  i.placeholder="Nilai " + (inputs.children.length+1);
+  i.placeholder="Nilai "+(inputs.children.length+1);
   inputs.appendChild(i);
 }
 
 /* HITUNG */
 function hitung(){
   play("klik");
-
-  let inputs = document.querySelectorAll("#inputs input");
+  let inputs=document.querySelectorAll("#inputs input");
   let total=0;
 
   for(let i of inputs){
