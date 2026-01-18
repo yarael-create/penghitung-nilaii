@@ -1,161 +1,153 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Penghitung Nilai</title>
+<meta charset="UTF-8">
+<title>Penghitung Nilai</title>
 
-  <!-- FONT -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background:
-        linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
-        url("https://images.unsplash.com/photo-1519682337058-a94d519337bc");
-      background-size: cover;
-      background-position: center;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:
+    linear-gradient(rgba(255,245,250,0.85), rgba(255,245,250,0.85)),
+    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
+  background-size:cover;
+  background-position:center;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
-    .card {
-      background: #ffffff;
-      width: 90%;
-      max-width: 360px;
-      padding: 25px;
-      border-radius: 22px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-      text-align: center;
-      animation: fadeIn 0.8s ease;
-    }
+.app{
+  background:#ffffff;
+  width:90%;
+  max-width:380px;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 25px 45px rgba(0,0,0,0.25);
+  text-align:center;
+  animation:masuk 0.8s ease;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+@keyframes masuk{
+  from{opacity:0; transform:translateY(25px);}
+  to{opacity:1; transform:translateY(0);}
+}
 
-    h1 {
-      font-size: 22px;
-      margin-bottom: 5px;
-    }
+h1{
+  margin:0;
+  font-size:22px;
+}
 
-    .subtitle {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 18px;
-    }
+.sub{
+  font-size:14px;
+  color:#666;
+  margin-bottom:18px;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 14px;
-      border: 1px solid #ddd;
-      font-size: 14px;
-    }
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
-      color: #333;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+}
 
-    button:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
+button:active{
+  transform:scale(0.95);
+}
 
-    #hasil {
-      margin-top: 15px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #333;
-    }
+#hasil{
+  margin-top:15px;
+  font-size:17px;
+  font-weight:600;
+}
 
-    .motivasi {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #555;
-      font-style: italic;
-    }
-  </style>
+.motivasi{
+  margin-top:10px;
+  font-size:13px;
+  font-style:italic;
+  color:#555;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="card">
-    <h1>📊 Hitung Nilai</h1>
-    <div class="subtitle">Isi nilaimu dan lihat hasilnya ✨</div>
+<div class="app">
+  <h1>📊 Hitung Nilai</h1>
+  <div class="sub">Masukkan nilaimu dan lihat hasilnya ✨</div>
 
-    <input type="number" id="nilai1" placeholder="Nilai 1">
-    <input type="number" id="nilai2" placeholder="Nilai 2">
-    <input type="number" id="nilai3" placeholder="Nilai 3">
+  <input type="number" id="nilai1" placeholder="Nilai 1">
+  <input type="number" id="nilai2" placeholder="Nilai 2">
+  <input type="number" id="nilai3" placeholder="Nilai 3">
 
-    <button onclick="hitungRata()">Hitung 💖</button>
+  <button onclick="hitung()">Hitung Sekarang 🎀</button>
 
-    <div id="hasil"></div>
-    <div class="motivasi" id="motivasi"></div>
-  </div>
+  <div id="hasil"></div>
+  <div class="motivasi" id="motivasi"></div>
+</div>
 
-  <!-- SOUND -->
-  <audio id="klikSound">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3" type="audio/mpeg">
-  </audio>
+<!-- SOUND -->
+<audio id="soundKlik">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3">
+</audio>
 
-  <!-- CONFETTI LIBRARY -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- CONFETTI -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- JAVASCRIPT -->
-  <script>
-    function hitungRata() {
-      document.getElementById("klikSound").play();
+<script>
+function hitung(){
+  document.getElementById("soundKlik").play();
 
-      let n1 = Number(document.getElementById("nilai1").value);
-      let n2 = Number(document.getElementById("nilai2").value);
-      let n3 = Number(document.getElementById("nilai3").value);
+  let n1 = Number(nilai1.value);
+  let n2 = Number(nilai2.value);
+  let n3 = Number(nilai3.value);
 
-      if (!n1 || !n2 || !n3) {
-        document.getElementById("hasil").innerHTML = "⚠️ Isi semua nilai dulu ya";
-        document.getElementById("motivasi").innerHTML = "";
-        return;
-      }
+  if(!n1 || !n2 || !n3){
+    hasil.innerHTML="⚠️ Isi semua nilai dulu ya";
+    motivasi.innerHTML="";
+    return;
+  }
 
-      let rata = (n1 + n2 + n3) / 3;
+  let rata = (n1+n2+n3)/3;
 
-      document.getElementById("hasil").innerHTML =
-        "🎯 Nilai rata-rata kamu: <br>" + rata.toFixed(2);
+  hasil.innerHTML = "🎯 Rata-rata: <br>"+rata.toFixed(2);
 
-      const kataMotivasi = [
-        "Keren! Terus pertahankan semangat belajarmu 🌟",
-        "Hasil bagus datang dari usaha yang konsisten 💪",
-        "Pelan-pelan tapi pasti, kamu hebat ✨",
-        "Belajar itu proses, dan kamu sudah di jalur yang tepat 🌈",
-        "Jangan berhenti mencoba, kamu luar biasa 🚀"
-      ];
+  let kata = [
+    "Kamu keren, teruskan semangat belajarmu 🌸",
+    "Sedikit demi sedikit, kamu makin hebat ✨",
+    "Hasil bagus datang dari usaha yang konsisten 💖",
+    "Jangan menyerah, kamu di jalur yang tepat 🌈",
+    "Belajar hari ini, sukses esok hari 🚀"
+  ];
+  motivasi.innerHTML = kata[Math.floor(Math.random()*kata.length)];
 
-      const randomIndex = Math.floor(Math.random() * kataMotivasi.length);
-      document.getElementById("motivasi").innerHTML = kataMotivasi[randomIndex];
-
-      // CONFETTI JIKA NILAI BAGUS
-      if (rata >= 80) {
-        confetti({
-          particleCount: 120,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
-      }
-    }
-  </script>
+  if(rata >= 80){
+    confetti({
+      particleCount:150,
+      spread:80,
+      origin:{y:0.6}
+    });
+  }
+}
+</script>
 
 </body>
 </html>
