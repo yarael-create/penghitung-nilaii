@@ -11,8 +11,8 @@ body{
   margin:0;
   font-family:'Poppins',sans-serif;
   background:
-    linear-gradient(rgba(255,245,250,0.85), rgba(255,245,250,0.85)),
-    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
+    linear-gradient(rgba(255,245,250,0.9), rgba(255,245,250,0.9)),
+    url("https://images.unsplash.com/photo-1588072432836-e10032774350");
   background-size:cover;
   background-position:center;
   min-height:100vh;
@@ -23,40 +23,48 @@ body{
 
 .app{
   background:#ffffff;
-  width:90%;
-  max-width:380px;
+  width:92%;
+  max-width:400px;
   padding:25px;
   border-radius:25px;
-  box-shadow:0 25px 45px rgba(0,0,0,0.25);
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
   text-align:center;
-  animation:masuk 0.8s ease;
-}
-
-@keyframes masuk{
-  from{opacity:0; transform:translateY(25px);}
-  to{opacity:1; transform:translateY(0);}
 }
 
 h1{
-  margin:0;
   font-size:22px;
+  margin-bottom:5px;
 }
 
 .sub{
   font-size:14px;
   color:#666;
-  margin-bottom:18px;
+  margin-bottom:15px;
 }
 
+/* INPUT */
 input{
   width:100%;
   padding:12px;
-  margin-bottom:10px;
+  margin-bottom:8px;
   border-radius:14px;
   border:1px solid #ddd;
   font-size:14px;
 }
 
+/* SHAKE */
+.shake{
+  animation:shake 0.4s;
+}
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
+  100%{transform:translateX(0)}
+}
+
+/* BUTTON */
 button{
   width:100%;
   padding:12px;
@@ -66,10 +74,17 @@ button{
   font-size:15px;
   font-weight:600;
   cursor:pointer;
+  margin-top:8px;
+  transition:0.2s;
 }
-
 button:active{
   transform:scale(0.95);
+}
+
+/* ADD BUTTON */
+.add{
+  background:#e0e7ff;
+  color:#333;
 }
 
 #hasil{
@@ -79,7 +94,7 @@ button:active{
 }
 
 .motivasi{
-  margin-top:10px;
+  margin-top:8px;
   font-size:13px;
   font-style:italic;
   color:#555;
@@ -89,93 +104,70 @@ button:active{
 
 <body>
 
-<div class="app">
+<div class="app" id="app">
   <h1>📊 Hitung Nilai</h1>
-  <div class="sub">Masukkan nilaimu dan lihat hasilnya ✨</div>
+  <div class="sub">Tambah nilai sesuai kebutuhanmu ✨</div>
 
-  <input type="number" id="nilai1" placeholder="Nilai 1">
-  <input type="number" id="nilai2" placeholder="Nilai 2">
-  <input type="number" id="nilai3" placeholder="Nilai 3">
+  <div id="inputs">
+    <input type="number" placeholder="Nilai 1">
+    <input type="number" placeholder="Nilai 2">
+    <input type="number" placeholder="Nilai 3">
+  </div>
 
-  <button onclick="hitung()">Hitung Sekarang 🎀</button>
+  <button class="add" onclick="tambahInput()">➕ Tambah Nilai</button>
+  <button onclick="hitung()">🎀 Hitung Rata-rata</button>
 
   <div id="hasil"></div>
   <div class="motivasi" id="motivasi"></div>
 </div>
 
-<!-- AUDIO -->
-<audio id="soundBagus" preload="auto"></audio>
-<audio id="soundKurang" preload="auto"></audio>
-
 <!-- CONFETTI -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-const soundBagus = document.getElementById("soundBagus");
-const soundKurang = document.getElementById("soundKurang");
+function tambahInput(){
+  let div = document.getElementById("inputs");
+  let jumlah = div.children.length + 1;
 
-soundBagus.src = "https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3";
-soundKurang.src = "https://assets.mixkit.co/sfx/preview/mixkit-cartoon-failure-piano-473.mp3";
+  let input = document.createElement("input");
+  input.type = "number";
+  input.placeholder = "Nilai " + jumlah;
 
-let audioSiap = false;
-
-// 🔑 AKTIFKAN AUDIO (WAJIB UNTUK HP)
-function aktifkanAudio(){
-  if(!audioSiap){
-    soundBagus.muted = true;
-    soundBagus.play().then(()=>{
-      soundBagus.pause();
-      soundBagus.muted = false;
-      audioSiap = true;
-    });
-  }
+  div.appendChild(input);
 }
 
 function hitung(){
-  aktifkanAudio();
+  let inputs = document.querySelectorAll("#inputs input");
+  let total = 0;
 
-  let n1 = Number(nilai1.value);
-  let n2 = Number(nilai2.value);
-  let n3 = Number(nilai3.value);
-
-  if(!n1 || !n2 || !n3){
-    hasil.innerHTML = "⚠️ Isi semua nilai dulu ya";
-    motivasi.innerHTML = "";
-    return;
+  for(let i=0;i<inputs.length;i++){
+    if(inputs[i].value === ""){
+      document.getElementById("app").classList.add("shake");
+      setTimeout(()=>app.classList.remove("shake"),400);
+      hasil.innerHTML = "⚠️ Masih ada nilai yang kosong";
+      motivasi.innerHTML = "";
+      return;
+    }
+    total += Number(inputs[i].value);
   }
 
-  let rata = (n1 + n2 + n3) / 3;
-  hasil.innerHTML = "🎯 Rata-rata:<br>" + rata.toFixed(2);
+  let rata = total / inputs.length;
+  hasil.innerHTML = "🎯 Rata-rata: <br>" + rata.toFixed(2);
 
-  let motivasiBagus = [
-    "Keren banget! 🌟",
-    "Usahamu membuahkan hasil ✨",
-    "Teruskan, kamu hebat 💖"
+  let kata = [
+    "Terus belajar, kamu hebat ✨",
+    "Setiap usaha pasti ada hasil 🌸",
+    "Pelan-pelan juga tetap maju 💪",
+    "Kamu sedang berkembang 🌈"
   ];
-
-  let motivasiKurang = [
-    "Tidak apa-apa, ayo coba lagi 💪",
-    "Proses itu penting 🌈",
-    "Tetap semangat ya 📘"
-  ];
+  motivasi.innerHTML = kata[Math.floor(Math.random()*kata.length)];
 
   if(rata >= 80){
-    soundBagus.currentTime = 0;
-    soundBagus.play();
-
-    motivasi.innerHTML = motivasiBagus[Math.floor(Math.random()*motivasiBagus.length)];
-
     confetti({
-      particleCount:150,
-      spread:80,
+      particleCount:120,
+      spread:70,
       origin:{y:0.6}
     });
-
-  } else {
-    soundKurang.currentTime = 0;
-    soundKurang.play();
-
-    motivasi.innerHTML = motivasiKurang[Math.floor(Math.random()*motivasiKurang.length)];
   }
 }
 </script>
