@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* ================= THEME ================= */
+/* ===== THEME ===== */
 :root{
   --bg:#0f172a;
   --card:#020617;
@@ -40,49 +40,26 @@ html,body{
   transition:0.3s;
 }
 
-/* ================= DOODLE BACKGROUND ================= */
-.bg span{
-  position:absolute;
-  font-size:32px;
-  opacity:0.28;
-}
-
-.float{animation:float 8s infinite ease-in-out;}
-.spin{animation:spin 14s linear infinite;}
-.pulse{animation:pulse 6s infinite ease-in-out;}
-
-@keyframes float{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-18px);}
-}
-@keyframes spin{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
-}
-@keyframes pulse{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.15);}
-}
-
-/* POSISI DOODLE */
-.d1{top:6%; left:8%;}
-.d2{top:14%; right:10%;}
-.d3{top:45%; left:3%;}
-.d4{top:55%; right:5%;}
-.d5{bottom:18%; left:10%;}
-.d6{bottom:10%; right:15%;}
-.d7{top:30%; left:18%;}
-.d8{top:35%; right:20%;}
-.d9{bottom:35%; left:20%;}
-.d10{bottom:30%; right:22%;}
-
-/* ================= APP ================= */
 body{
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
+/* ===== DOODLE ===== */
+.doodle{
+  position:absolute;
+  font-size:30px;
+  opacity:0.25;
+  animation:float 8s infinite ease-in-out;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+}
+
+/* ===== APP ===== */
 .app{
   width:92%;
   max-width:420px;
@@ -99,7 +76,7 @@ body{
 h1{color:var(--text)}
 .sub{color:var(--sub); font-size:14px; margin-bottom:12px}
 
-/* ================= INPUT ================= */
+/* ===== INPUT ===== */
 input{
   width:100%;
   padding:13px;
@@ -111,7 +88,7 @@ input{
   font-size:14px;
 }
 
-/* ================= BUTTON ================= */
+/* ===== BUTTON ===== */
 button{
   width:100%;
   padding:14px;
@@ -124,9 +101,7 @@ button{
   transition:0.2s;
 }
 
-button:active{
-  transform:scale(0.95);
-}
+button:active{transform:scale(0.95)}
 
 .toggle{
   background:none;
@@ -135,7 +110,7 @@ button:active{
   margin-bottom:10px;
 }
 
-/* ================= OUTPUT ================= */
+/* ===== OUTPUT ===== */
 #hasil{
   margin-top:14px;
   font-size:18px;
@@ -153,25 +128,14 @@ button:active{
 
 <body>
 
-<!-- DOODLE RAMAI -->
-<div class="bg">
-  <span class="d1 float">📘</span>
-  <span class="d2 spin">✏️</span>
-  <span class="d3 pulse">📐</span>
-  <span class="d4 float">🎨</span>
-  <span class="d5 spin">📊</span>
-  <span class="d6 pulse">⭐</span>
-  <span class="d7 float">📝</span>
-  <span class="d8 spin">📎</span>
-  <span class="d9 pulse">📚</span>
-  <span class="d10 float">💡</span>
-</div>
+<!-- DOODLE CONTAINER -->
+<div id="doodleArea"></div>
 
 <div class="app">
   <button class="toggle" onclick="toggleMode()">🌙 / ☀️</button>
 
   <h1>📊 Hitung Nilai</h1>
-  <div class="sub">Belajar jadi seru, lucu & estetik ✨</div>
+  <div class="sub">Belajar jadi lebih nyaman ✨</div>
 
   <div id="inputs">
     <input type="number" placeholder="Nilai 1">
@@ -194,25 +158,42 @@ button:active{
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
+/* ===== MODE ===== */
 const body=document.body;
-
 if(localStorage.getItem("mode")==="light"){
   body.classList.add("light");
 }
 
 function toggleMode(){
   body.classList.toggle("light");
-  localStorage.setItem("mode",
+  localStorage.setItem(
+    "mode",
     body.classList.contains("light")?"light":"dark"
   );
 }
 
+/* ===== SOUND ===== */
 function play(id){
   const s=document.getElementById(id);
   s.currentTime=0;
   s.play();
 }
 
+/* ===== DOODLE RANDOM ===== */
+const icons = ["📘","📚","✏️","📐","📊","📝","📎","📌","🎨","📒","📏"];
+const area = document.getElementById("doodleArea");
+
+for(let i=0;i<20;i++){
+  let d=document.createElement("div");
+  d.className="doodle";
+  d.innerText=icons[Math.floor(Math.random()*icons.length)];
+  d.style.top=Math.random()*100+"%";
+  d.style.left=Math.random()*100+"%";
+  d.style.animationDuration=(6+Math.random()*6)+"s";
+  area.appendChild(d);
+}
+
+/* ===== INPUT ===== */
 function tambahInput(){
   play("klik");
   let i=document.createElement("input");
@@ -221,6 +202,7 @@ function tambahInput(){
   inputs.appendChild(i);
 }
 
+/* ===== HITUNG ===== */
 function hitung(){
   play("klik");
   let inputs=document.querySelectorAll("#inputs input");
