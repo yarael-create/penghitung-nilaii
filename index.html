@@ -66,7 +66,6 @@ button{
   font-size:15px;
   font-weight:600;
   cursor:pointer;
-  transition:all 0.2s;
 }
 
 button:active{
@@ -104,21 +103,36 @@ button:active{
   <div class="motivasi" id="motivasi"></div>
 </div>
 
-<!-- SOUND NILAI BAGUS -->
-<audio id="soundBagus" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
-</audio>
-
-<!-- SOUND NILAI KURANG -->
-<audio id="soundKurang" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-failure-piano-473.mp3" type="audio/mpeg">
-</audio>
+<!-- AUDIO -->
+<audio id="soundBagus" preload="auto"></audio>
+<audio id="soundKurang" preload="auto"></audio>
 
 <!-- CONFETTI -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
+const soundBagus = document.getElementById("soundBagus");
+const soundKurang = document.getElementById("soundKurang");
+
+soundBagus.src = "https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3";
+soundKurang.src = "https://assets.mixkit.co/sfx/preview/mixkit-cartoon-failure-piano-473.mp3";
+
+let audioSiap = false;
+
+// 🔑 AKTIFKAN AUDIO (WAJIB UNTUK HP)
+function aktifkanAudio(){
+  if(!audioSiap){
+    soundBagus.muted = true;
+    soundBagus.play().then(()=>{
+      soundBagus.pause();
+      soundBagus.muted = false;
+      audioSiap = true;
+    });
+  }
+}
+
 function hitung(){
+  aktifkanAudio();
 
   let n1 = Number(nilai1.value);
   let n2 = Number(nilai2.value);
@@ -131,26 +145,23 @@ function hitung(){
   }
 
   let rata = (n1 + n2 + n3) / 3;
-  hasil.innerHTML = "🎯 Rata-rata: <br>" + rata.toFixed(2);
+  hasil.innerHTML = "🎯 Rata-rata:<br>" + rata.toFixed(2);
 
   let motivasiBagus = [
-    "Keren banget! Pertahankan ya 🌟",
-    "Hasil usaha tidak pernah bohong 💖",
-    "Nilaimu bagus, terus maju 🚀",
-    "Belajarmu membuahkan hasil ✨"
+    "Keren banget! 🌟",
+    "Usahamu membuahkan hasil ✨",
+    "Teruskan, kamu hebat 💖"
   ];
 
   let motivasiKurang = [
     "Tidak apa-apa, ayo coba lagi 💪",
-    "Ini bukan akhir, tetap semangat 🌈",
-    "Pelan-pelan juga tidak masalah 📘",
-    "Proses itu lebih penting ✨"
+    "Proses itu penting 🌈",
+    "Tetap semangat ya 📘"
   ];
 
   if(rata >= 80){
-    let audioBagus = document.getElementById("soundBagus");
-    audioBagus.currentTime = 0;
-    audioBagus.play();
+    soundBagus.currentTime = 0;
+    soundBagus.play();
 
     motivasi.innerHTML = motivasiBagus[Math.floor(Math.random()*motivasiBagus.length)];
 
@@ -161,9 +172,8 @@ function hitung(){
     });
 
   } else {
-    let audioKurang = document.getElementById("soundKurang");
-    audioKurang.currentTime = 0;
-    audioKurang.play();
+    soundKurang.currentTime = 0;
+    soundKurang.play();
 
     motivasi.innerHTML = motivasiKurang[Math.floor(Math.random()*motivasiKurang.length)];
   }
