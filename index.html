@@ -8,161 +8,117 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* FULLSCREEN APP */
-html, body{
-  width:100%;
-  height:100%;
+/* ===== THEME ===== */
+:root{
+  --bg:#0f172a;
+  --card:#020617;
+  --text:#f8fafc;
+  --sub:#c7d2fe;
+  --input:#020617;
+  --border:#1e293b;
+  --btn1:#818cf8;
+  --btn2:#f472b6;
+}
+
+.light{
+  --bg:#fde2ff;
+  --card:#ffffff;
+  --text:#020617;
+  --sub:#475569;
+  --input:#fff7fb;
+  --border:#f3bcd4;
+  --btn1:#fbc2eb;
+  --btn2:#a6c1ee;
+}
+
+html,body{
   margin:0;
+  height:100%;
   font-family:'Poppins',sans-serif;
-  background:#0f172a;
-  overflow:hidden;
+  background:var(--bg);
+  transition:0.3s;
 }
 
-/* BACKGROUND GRADIENT */
-.bg{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top left,#1e293b,transparent 60%),
-    radial-gradient(circle at bottom right,#312e81,transparent 60%);
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* DOODLE ICON */
-.doodle{
-  position:absolute;
-  font-size:34px;
-  opacity:0.15;
-  animation:float 6s infinite ease-in-out;
-}
-.d1{top:8%; left:10%;}
-.d2{top:20%; right:12%; animation-delay:1s;}
-.d3{bottom:18%; left:12%; animation-delay:2s;}
-.d4{bottom:25%; right:15%; animation-delay:3s;}
-
-@keyframes float{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-18px);}
-  100%{transform:translateY(0);}
-}
-
-/* APP CARD */
+/* ===== APP ===== */
 .app{
-  position:relative;
-  z-index:2;
   width:92%;
   max-width:420px;
-  margin:auto;
-  background:#020617;
+  background:var(--card);
   padding:26px;
-  border-radius:32px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.7);
+  border-radius:30px;
   text-align:center;
-  animation:fadeUp 0.6s ease;
+  box-shadow:0 25px 50px rgba(0,0,0,0.4);
+  transition:0.3s;
 }
 
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(30px);}
-  to{opacity:1; transform:translateY(0);}
-}
+h1{color:var(--text)}
+.sub{color:var(--sub); font-size:14px; margin-bottom:12px}
 
-/* TEXT */
-h1{
-  font-size:22px;
-  margin-bottom:4px;
-  color:#f8fafc;
-}
-
-.sub{
-  font-size:14px;
-  color:#c7d2fe;
-  margin-bottom:15px;
-}
-
-/* INPUT */
+/* ===== INPUT ===== */
 input{
   width:100%;
   padding:13px;
   margin-bottom:8px;
   border-radius:18px;
-  border:1px solid #1e293b;
-  background:#020617;
-  color:#e5e7eb;
+  border:1px dashed var(--border);
+  background:var(--input);
+  color:var(--text);
   font-size:14px;
 }
-input::placeholder{
-  color:#64748b;
-}
 
-/* SHAKE */
-.shake{
-  animation:shake 0.4s;
-}
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-6px)}
-  50%{transform:translateX(6px)}
-  75%{transform:translateX(-6px)}
-  100%{transform:translateX(0)}
-}
-
-/* BUTTON */
+/* ===== BUTTON ===== */
 button{
   width:100%;
   padding:14px;
   border:none;
   border-radius:22px;
-  background:linear-gradient(135deg,#818cf8,#f472b6);
-  font-size:15px;
-  font-weight:600;
-  color:#020617;
-  cursor:pointer;
   margin-top:8px;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--btn1),var(--btn2));
   transition:0.2s;
-}
-
-button:hover{
-  filter:brightness(1.1);
 }
 
 button:active{
   transform:scale(0.95);
 }
 
-.add{
-  background:#1e293b;
-  color:#e5e7eb;
+.toggle{
+  background:none;
+  color:var(--text);
+  font-size:20px;
+  margin-bottom:10px;
 }
 
-/* OUTPUT */
+/* ===== OUTPUT ===== */
 #hasil{
-  margin-top:15px;
+  margin-top:14px;
   font-size:18px;
   font-weight:600;
-  color:#f8fafc;
+  color:var(--text);
 }
 
 .motivasi{
-  margin-top:8px;
   font-size:13px;
   font-style:italic;
-  color:#c7d2fe;
+  color:var(--sub);
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="app">
+  <button class="toggle" onclick="toggleMode()">🌙 / ☀️</button>
 
-<!-- DOODLE -->
-<div class="doodle d1">📘</div>
-<div class="doodle d2">✏️</div>
-<div class="doodle d3">📐</div>
-<div class="doodle d4">🖍️</div>
-
-<div class="app" id="app">
   <h1>📊 Hitung Nilai</h1>
-  <div class="sub">Mode gelap, fokus belajar ✨</div>
+  <div class="sub">Belajar nyaman dengan mode favoritmu</div>
 
   <div id="inputs">
     <input type="number" placeholder="Nilai 1">
@@ -170,59 +126,89 @@ button:active{
     <input type="number" placeholder="Nilai 3">
   </div>
 
-  <button class="add" onclick="tambahInput()">➕ Tambah Nilai</button>
+  <button onclick="tambahInput()">➕ Tambah Nilai</button>
   <button onclick="hitung()">🎀 Hitung Rata-rata</button>
 
   <div id="hasil"></div>
   <div class="motivasi" id="motivasi"></div>
 </div>
 
+<!-- ===== SOUND EFFECT ===== -->
+<audio id="klik" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
+<audio id="bagus" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+<audio id="jelek" src="https://assets.mixkit.co/sfx/preview/mixkit-losing-drums-2023.mp3"></audio>
+
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-function tambahInput(){
-  let div = document.getElementById("inputs");
-  let jumlah = div.children.length + 1;
+const body = document.body;
 
-  let input = document.createElement("input");
-  input.type = "number";
-  input.placeholder = "Nilai " + jumlah;
-
-  div.appendChild(input);
+/* SIMPAN MODE */
+if(localStorage.getItem("mode")==="light"){
+  body.classList.add("light");
 }
 
-function hitung(){
-  let inputs = document.querySelectorAll("#inputs input");
-  let total = 0;
+function toggleMode(){
+  body.classList.toggle("light");
+  localStorage.setItem(
+    "mode",
+    body.classList.contains("light") ? "light" : "dark"
+  );
+}
 
-  for(let i=0;i<inputs.length;i++){
-    if(inputs[i].value === ""){
-      app.classList.add("shake");
-      setTimeout(()=>app.classList.remove("shake"),400);
-      hasil.innerHTML = "⚠️ Masih ada nilai kosong";
-      motivasi.innerHTML = "";
+/* PLAY SOUND */
+function play(id){
+  const s = document.getElementById(id);
+  s.currentTime = 0;
+  s.play();
+}
+
+/* TAMBAH INPUT */
+function tambahInput(){
+  play("klik");
+  let i = document.createElement("input");
+  i.type="number";
+  i.placeholder="Nilai " + (inputs.children.length+1);
+  inputs.appendChild(i);
+}
+
+/* HITUNG */
+function hitung(){
+  play("klik");
+
+  let inputs = document.querySelectorAll("#inputs input");
+  let total=0;
+
+  for(let i of inputs){
+    if(i.value===""){
+      hasil.innerHTML="⚠️ Lengkapi semua nilai dulu";
+      motivasi.innerHTML="";
+      play("jelek");
       return;
     }
-    total += Number(inputs[i].value);
+    total+=Number(i.value);
   }
 
-  let rata = total / inputs.length;
-  hasil.innerHTML = "🎯 Rata-rata:<br>" + rata.toFixed(2);
+  let rata=total/inputs.length;
+  hasil.innerHTML="🎯 Rata-rata:<br>"+rata.toFixed(2);
 
-  let kata = [
-    "Fokus hari ini, sukses nanti ✨",
-    "Pelan-pelan tapi pasti 🌙",
-    "Belajar itu investasi 💡",
-    "Kamu sedang berkembang 🌱"
+  let kata=[
+    "Pelan-pelan tapi konsisten 🌱",
+    "Belajar itu proses ✨",
+    "Kamu sedang berkembang 💖",
+    "Terus berusaha, kamu hebat 🌈"
   ];
-  motivasi.innerHTML = kata[Math.floor(Math.random()*kata.length)];
+  motivasi.innerHTML=kata[Math.floor(Math.random()*kata.length)];
 
-  if(rata >= 80){
+  if(rata>=80){
+    play("bagus");
     confetti({
-      particleCount:100,
+      particleCount:120,
       spread:80,
       origin:{y:0.6}
     });
+  }else{
+    play("jelek");
   }
 }
 </script>
