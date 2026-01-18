@@ -104,9 +104,14 @@ button:active{
   <div class="motivasi" id="motivasi"></div>
 </div>
 
-<!-- SOUND -->
-<audio id="soundKlik">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3">
+<!-- SOUND NILAI BAGUS -->
+<audio id="soundBagus" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SOUND NILAI KURANG -->
+<audio id="soundKurang" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-failure-piano-473.mp3" type="audio/mpeg">
 </audio>
 
 <!-- CONFETTI -->
@@ -114,37 +119,53 @@ button:active{
 
 <script>
 function hitung(){
-  document.getElementById("soundKlik").play();
 
   let n1 = Number(nilai1.value);
   let n2 = Number(nilai2.value);
   let n3 = Number(nilai3.value);
 
   if(!n1 || !n2 || !n3){
-    hasil.innerHTML="⚠️ Isi semua nilai dulu ya";
-    motivasi.innerHTML="";
+    hasil.innerHTML = "⚠️ Isi semua nilai dulu ya";
+    motivasi.innerHTML = "";
     return;
   }
 
-  let rata = (n1+n2+n3)/3;
+  let rata = (n1 + n2 + n3) / 3;
+  hasil.innerHTML = "🎯 Rata-rata: <br>" + rata.toFixed(2);
 
-  hasil.innerHTML = "🎯 Rata-rata: <br>"+rata.toFixed(2);
-
-  let kata = [
-    "Kamu keren, teruskan semangat belajarmu 🌸",
-    "Sedikit demi sedikit, kamu makin hebat ✨",
-    "Hasil bagus datang dari usaha yang konsisten 💖",
-    "Jangan menyerah, kamu di jalur yang tepat 🌈",
-    "Belajar hari ini, sukses esok hari 🚀"
+  let motivasiBagus = [
+    "Keren banget! Pertahankan ya 🌟",
+    "Hasil usaha tidak pernah bohong 💖",
+    "Nilaimu bagus, terus maju 🚀",
+    "Belajarmu membuahkan hasil ✨"
   ];
-  motivasi.innerHTML = kata[Math.floor(Math.random()*kata.length)];
+
+  let motivasiKurang = [
+    "Tidak apa-apa, ayo coba lagi 💪",
+    "Ini bukan akhir, tetap semangat 🌈",
+    "Pelan-pelan juga tidak masalah 📘",
+    "Proses itu lebih penting ✨"
+  ];
 
   if(rata >= 80){
+    let audioBagus = document.getElementById("soundBagus");
+    audioBagus.currentTime = 0;
+    audioBagus.play();
+
+    motivasi.innerHTML = motivasiBagus[Math.floor(Math.random()*motivasiBagus.length)];
+
     confetti({
       particleCount:150,
       spread:80,
       origin:{y:0.6}
     });
+
+  } else {
+    let audioKurang = document.getElementById("soundKurang");
+    audioKurang.currentTime = 0;
+    audioKurang.play();
+
+    motivasi.innerHTML = motivasiKurang[Math.floor(Math.random()*motivasiKurang.length)];
   }
 }
 </script>
