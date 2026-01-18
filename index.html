@@ -11,29 +11,34 @@ body{
   margin:0;
   font-family:'Poppins',sans-serif;
   background:
-    linear-gradient(rgba(255,250,252,0.92), rgba(255,250,252,0.92)),
-    url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b");
-  background-size:cover;
-  background-position:center;
+    linear-gradient(rgba(255,250,252,0.95), rgba(255,250,252,0.95)),
+    url("https://www.transparenttextures.com/patterns/notebook.png");
   min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
+/* CARD */
 .app{
   background:#ffffff;
   width:92%;
   max-width:400px;
   padding:25px;
-  border-radius:26px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.22);
+  border-radius:28px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
   text-align:center;
+  animation:masuk 0.6s ease;
+}
+
+@keyframes masuk{
+  from{opacity:0; transform:scale(0.95);}
+  to{opacity:1; transform:scale(1);}
 }
 
 h1{
   font-size:22px;
-  margin-bottom:5px;
+  margin-bottom:4px;
 }
 
 .sub{
@@ -42,15 +47,18 @@ h1{
   margin-bottom:15px;
 }
 
+/* INPUT */
 input{
   width:100%;
   padding:12px;
   margin-bottom:8px;
   border-radius:14px;
-  border:1px solid #ddd;
+  border:1px dashed #f3bcd4;
   font-size:14px;
+  background:#fffafc;
 }
 
+/* SHAKE */
 .shake{
   animation:shake 0.4s;
 }
@@ -62,16 +70,18 @@ input{
   100%{transform:translateX(0)}
 }
 
+/* BUTTON */
 button{
   width:100%;
   padding:12px;
   border:none;
-  border-radius:16px;
+  border-radius:18px;
   background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
   font-size:15px;
   font-weight:600;
   cursor:pointer;
   margin-top:8px;
+  transition:0.2s;
 }
 
 button:active{
@@ -83,6 +93,7 @@ button:active{
   color:#333;
 }
 
+/* OUTPUT */
 #hasil{
   margin-top:15px;
   font-size:17px;
@@ -102,7 +113,7 @@ button:active{
 
 <div class="app" id="app">
   <h1>📊 Hitung Nilai</h1>
-  <div class="sub">Belajar jadi lebih menyenangkan ✨</div>
+  <div class="sub">Belajar jadi lebih seru 🎨</div>
 
   <div id="inputs">
     <input type="number" placeholder="Nilai 1">
@@ -151,9 +162,9 @@ function hitung(){
 
   let kata = [
     "Belajar itu proses, nikmati ya 🌸",
-    "Kamu sedang berkembang ✨",
-    "Pelan-pelan tapi konsisten 💪",
-    "Terus mencoba, itu yang penting 🌈"
+    "Pelan-pelan tapi pasti ✨",
+    "Kamu sedang berkembang 💖",
+    "Terus mencoba, kamu hebat 🌈"
   ];
   motivasi.innerHTML = kata[Math.floor(Math.random()*kata.length)];
 
