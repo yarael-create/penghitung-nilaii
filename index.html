@@ -2,68 +2,81 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Hitung Nilai Rata-rata</title>
+  <title>Penghitung Nilai</title>
 
-  <!-- FONT GOOGLE (ESTETIK) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0;
     }
 
-    .app {
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 20px;
+    .card {
+      background: white;
       width: 90%;
       max-width: 360px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      padding: 25px;
+      border-radius: 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
       text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-size: 22px;
+      margin-bottom: 8px;
     }
 
-    p {
+    .subtitle {
       font-size: 14px;
       color: #666;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     input {
       width: 100%;
       padding: 12px;
       margin-bottom: 10px;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid #ddd;
       font-size: 14px;
+      outline: none;
     }
 
     button {
       width: 100%;
       padding: 12px;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
 
-    button:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    button:active {
+      transform: scale(0.95);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
     #hasil {
@@ -71,47 +84,76 @@
       font-size: 16px;
       font-weight: 600;
       color: #333;
+      animation: pop 0.4s ease;
     }
 
-    .footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #aaa;
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .motivasi {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #555;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
 
-  <div class="app">
+  <div class="card">
     <h1>📊 Hitung Nilai</h1>
-    <p>Masukkan nilai untuk menghitung rata-rata</p>
+    <div class="subtitle">Masukkan nilai kamu di bawah</div>
 
     <!-- INPUT (ID TETAP) -->
     <input type="number" id="nilai1" placeholder="Nilai 1">
     <input type="number" id="nilai2" placeholder="Nilai 2">
     <input type="number" id="nilai3" placeholder="Nilai 3">
 
-    <button onclick="hitungRata()">Hitung Rata-rata</button>
+    <button onclick="hitungRata()">Hitung Sekarang ✨</button>
 
-    <!-- OUTPUT -->
     <div id="hasil"></div>
-
-    <div class="footer">
-      Made by siswa SMA 💖
-    </div>
+    <div class="motivasi" id="motivasi"></div>
   </div>
 
-  <!-- JAVASCRIPT (TIDAK DIUBAH LOGIKANYA) -->
+  <!-- SOUND -->
+  <audio id="klikSound">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- JAVASCRIPT -->
   <script>
     function hitungRata() {
+      // mainkan sound
+      document.getElementById("klikSound").play();
+
       let n1 = Number(document.getElementById("nilai1").value);
       let n2 = Number(document.getElementById("nilai2").value);
       let n3 = Number(document.getElementById("nilai3").value);
 
+      if (!n1 || !n2 || !n3) {
+        document.getElementById("hasil").innerHTML = "⚠️ Isi semua nilai dulu ya";
+        document.getElementById("motivasi").innerHTML = "";
+        return;
+      }
+
       let rata = (n1 + n2 + n3) / 3;
 
       document.getElementById("hasil").innerHTML =
-        "✨ Nilai rata-rata kamu: <br>" + rata.toFixed(2);
+        "🎯 Nilai rata-rata kamu: <br>" + rata.toFixed(2);
+
+      const kataMotivasi = [
+        "Setiap usaha kecil membawa kamu lebih dekat ke tujuan 🌱",
+        "Jangan takut salah, karena dari situ kamu belajar ✨",
+        "Hari ini belajar, besok jadi lebih hebat 🚀",
+        "Nilai bukan segalanya, prosesmu yang utama 💪",
+        "Terus maju, kamu sudah melakukan yang terbaik 🌟",
+        "Belajar pelan-pelan, tapi konsisten 📘"
+      ];
+
+      const randomIndex = Math.floor(Math.random() * kataMotivasi.length);
+      document.getElementById("motivasi").innerHTML = kataMotivasi[randomIndex];
     }
   </script>
 
