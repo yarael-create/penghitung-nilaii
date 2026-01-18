@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Penghitung Nilai Rata-Rata</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: blue;
+            color: white;
+            border: none;
+            font-size: 16px;
+        }
+
+        #hasil {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Penghitung Nilai Rata-Rata Siswa</h1>
+
+    <label>Nilai Tugas:</label><br>
+    <input type="number" id="tugas"><br><br>
+
+    <label>Nilai UTS:</label><br>
+    <input type="number" id="uts"><br><br>
+
+    <label>Nilai UAS:</label><br>
+    <input type="number" id="uas"><br><br>
+
+    <button onclick="hitung()">Hitung Nilai</button>
+
+    <h2 id="hasil"></h2>
+    
+    <script>
+        function hitung() {
+            var tugas = document.getElementById("tugas").value;
+            var uts = document.getElementById("uts").value;
+            var uas = document.getElementById("uas").value;
+
+            var rata = (Number(tugas) + Number(uts) + Number(uas)) / 3;
+
+            var keterangan = "";
+
+            if (rata >= 75) {
+                keterangan = "Lulus";
+            } else {
+                keterangan = "Tidak Lulus";
+            }
+
+            document.getElementById("hasil").innerHTML =
+                "Nilai Rata-Rata: " + rata.toFixed(2) + "<br>Keterangan: " + keterangan;
+         }
+    </script>
+
+</body>
+</html>
