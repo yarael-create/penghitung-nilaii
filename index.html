@@ -5,13 +5,17 @@
   <title>Penghitung Nilai</title>
 
   <!-- FONT -->
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      font-family: 'Poppins', sans-serif;
+      background:
+        linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
+        url("https://images.unsplash.com/photo-1519682337058-a94d519337bc");
+      background-size: cover;
+      background-position: center;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -19,7 +23,7 @@
     }
 
     .card {
-      background: white;
+      background: #ffffff;
       width: 90%;
       max-width: 360px;
       padding: 25px;
@@ -30,19 +34,13 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       font-size: 22px;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
 
     .subtitle {
@@ -58,7 +56,6 @@
       border-radius: 14px;
       border: 1px solid #ddd;
       font-size: 14px;
-      outline: none;
     }
 
     button {
@@ -66,8 +63,8 @@
       padding: 12px;
       border: none;
       border-radius: 14px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      color: #333;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
@@ -84,16 +81,10 @@
       font-size: 16px;
       font-weight: 600;
       color: #333;
-      animation: pop 0.4s ease;
-    }
-
-    @keyframes pop {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
     }
 
     .motivasi {
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 13px;
       color: #555;
       font-style: italic;
@@ -104,14 +95,13 @@
 
   <div class="card">
     <h1>📊 Hitung Nilai</h1>
-    <div class="subtitle">Masukkan nilai kamu di bawah</div>
+    <div class="subtitle">Isi nilaimu dan lihat hasilnya ✨</div>
 
-    <!-- INPUT (ID TETAP) -->
     <input type="number" id="nilai1" placeholder="Nilai 1">
     <input type="number" id="nilai2" placeholder="Nilai 2">
     <input type="number" id="nilai3" placeholder="Nilai 3">
 
-    <button onclick="hitungRata()">Hitung Sekarang ✨</button>
+    <button onclick="hitungRata()">Hitung 💖</button>
 
     <div id="hasil"></div>
     <div class="motivasi" id="motivasi"></div>
@@ -119,13 +109,15 @@
 
   <!-- SOUND -->
   <audio id="klikSound">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- CONFETTI LIBRARY -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- JAVASCRIPT -->
   <script>
     function hitungRata() {
-      // mainkan sound
       document.getElementById("klikSound").play();
 
       let n1 = Number(document.getElementById("nilai1").value);
@@ -144,16 +136,24 @@
         "🎯 Nilai rata-rata kamu: <br>" + rata.toFixed(2);
 
       const kataMotivasi = [
-        "Setiap usaha kecil membawa kamu lebih dekat ke tujuan 🌱",
-        "Jangan takut salah, karena dari situ kamu belajar ✨",
-        "Hari ini belajar, besok jadi lebih hebat 🚀",
-        "Nilai bukan segalanya, prosesmu yang utama 💪",
-        "Terus maju, kamu sudah melakukan yang terbaik 🌟",
-        "Belajar pelan-pelan, tapi konsisten 📘"
+        "Keren! Terus pertahankan semangat belajarmu 🌟",
+        "Hasil bagus datang dari usaha yang konsisten 💪",
+        "Pelan-pelan tapi pasti, kamu hebat ✨",
+        "Belajar itu proses, dan kamu sudah di jalur yang tepat 🌈",
+        "Jangan berhenti mencoba, kamu luar biasa 🚀"
       ];
 
       const randomIndex = Math.floor(Math.random() * kataMotivasi.length);
       document.getElementById("motivasi").innerHTML = kataMotivasi[randomIndex];
+
+      // CONFETTI JIKA NILAI BAGUS
+      if (rata >= 80) {
+        confetti({
+          particleCount: 120,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
     }
   </script>
 
